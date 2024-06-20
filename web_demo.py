@@ -1,11 +1,14 @@
 from transformers import AutoModel, AutoTokenizer
 import gradio as gr
 import mdtex2html
-
-tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True)
-model = AutoModel.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True).half().cuda()
+import os
+os.environ["PYTORCH_MPS_HIGH_WATERMARK_RATIO"] = "0.0"
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
+tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm-6b-int4", trust_remote_code=True)
+model = AutoModel.from_pretrained("THUDM/chatglm-6b-int4", trust_remote_code=True).float()
+# model = model.quantize(bits=4, kernel_file="/Users/ligang/PycharmProjects/llm/ChatGLM-6B/THUDM/chatglm-6b-int4/quantization_kernels.c")
+# model.to('mps') # 如果加载的是chatglm-6B就放开
 model = model.eval()
-
 """Override Chatbot.postprocess"""
 
 
@@ -80,8 +83,7 @@ with gr.Blocks() as demo:
     with gr.Row():
         with gr.Column(scale=4):
             with gr.Column(scale=12):
-                user_input = gr.Textbox(show_label=False, placeholder="Input...", lines=10).style(
-                    container=False)
+                user_input = gr.Textbox(show_label=False, placeholder="Input...", lines=10).style(container=False)
             with gr.Column(min_width=32, scale=1):
                 submitBtn = gr.Button("Submit", variant="primary")
         with gr.Column(scale=1):

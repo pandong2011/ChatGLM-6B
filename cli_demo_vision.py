@@ -4,7 +4,6 @@ import signal
 import sys
 
 from transformers import AutoTokenizer, AutoModel
-import readline
 
 tokenizer = AutoTokenizer.from_pretrained("THUDM/visualglm-6b", trust_remote_code=True)
 model = AutoModel.from_pretrained("THUDM/visualglm-6b", trust_remote_code=True).half().cuda()

@@ -4,7 +4,6 @@ import gradio as gr
 import mdtex2html
 
 import torch
-import transformers
 from transformers import (
     AutoConfig,
     AutoModel,
@@ -16,8 +15,7 @@ from transformers import (
     set_seed,
 )
 
-from arguments import ModelArguments, DataTrainingArguments
-
+from arguments import ModelArguments
 
 model = None
 tokenizer = None
@@ -67,7 +65,7 @@ def parse_text(text):
                     line = line.replace("(", "&#40;")
                     line = line.replace(")", "&#41;")
                     line = line.replace("$", "&#36;")
-                lines[i] = "<br>"+line
+                lines[i] = "<br>" + line
     text = "".join(lines)
     return text
 
@@ -76,7 +74,7 @@ def predict(input, chatbot, max_length, top_p, temperature, history):
     chatbot.append((parse_text(input), ""))
     for response, history in model.stream_chat(tokenizer, input, history, max_length=max_length, top_p=top_p,
                                                temperature=temperature):
-        chatbot[-1] = (parse_text(input), parse_text(response))       
+        chatbot[-1] = (parse_text(input), parse_text(response))
 
         yield chatbot, history
 
@@ -113,7 +111,6 @@ with gr.Blocks() as demo:
     submitBtn.click(reset_user_input, [], [user_input])
 
     emptyBtn.click(reset_state, outputs=[chatbot, history], show_progress=True)
-
 
 
 def main():
@@ -156,10 +153,9 @@ def main():
         # P-tuning v2
         model = model.half().cuda()
         model.transformer.prefix_encoder.float().cuda()
-    
+
     model = model.eval()
     demo.queue().launch(share=False, inbrowser=True)
-
 
 
 if __name__ == "__main__":

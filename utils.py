@@ -1,5 +1,5 @@
 import os
-from typing import Dict, Tuple, Union, Optional
+from typing import Dict, Union, Optional
 
 from torch.nn import Module
 from transformers import AutoModel
@@ -50,5 +50,3 @@ def load_model_on_gpus(checkpoint_path: Union[str, os.PathLike], num_gpus: int =
         model = dispatch_model(model, device_map=device_map)
 
     return model
-
-
