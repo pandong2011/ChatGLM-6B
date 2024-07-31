@@ -6,7 +6,6 @@ from rich import print
 from rich.console import Console
 from transformers import AutoTokenizer, AutoModel
 
-
 # 提供所有类别以及每个类别下的样例
 class_examples = {
     '新闻报道': '今日，股市经历了一轮震荡，受到宏观经济数据和全球贸易紧张局势的影响。投资者密切关注美联储可能的政策调整，以适应市场的不确定性。',
@@ -14,12 +13,13 @@ class_examples = {
     '公司公告': '本公司高兴地宣布成功完成最新一轮并购交易，收购了一家在人工智能领域领先的公司。这一战略举措将有助于扩大我们的业务领域，提高市场竞争力',
     '分析师报告': '最新的行业分析报告指出，科技公司的创新将成为未来增长的主要推动力。云计算、人工智能和数字化转型被认为是引领行业发展的关键因素，投资者应关注这些趋势'}
 
+
 # 定义init_prompts函数
 def init_prompts():
-    '''
+    """
     这里是对函数的功能进行注释，方便他人理解：该函数的目的是初始化前置prompt,便于模型做Few-shot
     :return: dict字典
-    '''
+    """
     class_list = list(class_examples.keys())
     print(f'分类的类别数：{class_list}')
 
@@ -34,7 +34,8 @@ def init_prompts():
         pre_history.append((f'"{example}"是{class_list}里的什么类别', _type))
 
     # print(f'pre_history--》{pre_history}')
-    return {"class_list":class_list, "pre_history":pre_history}
+    return {"class_list": class_list, "pre_history": pre_history}
+
 
 def inference(sentences: list,
               custom_settings: dict):
@@ -57,11 +58,13 @@ def inference(sentences: list,
 
 if __name__ == '__main__':
     console = Console()
-    #device = 'cuda:0'
+    # device = 'cuda:0'
     device = 'cpu'
-    tokenizer = AutoTokenizer.from_pretrained("/Users/ligang/PycharmProjects/llm/ChatGLM-6B/THUDM/chatglm-6b-int4",trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained("/Users/pandong2011/PycharmProjects/ChatGLM-6B/THUDM/chatglm-6b-int4",
+                                              trust_remote_code=True)
     # model = AutoModel.from_pretrained("./ChatGLM-6B/THUDM/chatglm-6b", trust_remote_code=True).half().cuda()
-    model = AutoModel.from_pretrained("/Users/ligang/PycharmProjects/llm/ChatGLM-6B/THUDM/chatglm-6b-int4",trust_remote_code=True).float()
+    model = AutoModel.from_pretrained("/Users/pandong2011/PycharmProjects/ChatGLM-6B/THUDM/chatglm-6b-int4",
+                                      trust_remote_code=True).float()
     model.to(device)
 
     # sentences = [
@@ -78,11 +81,3 @@ if __name__ == '__main__':
         sentences,
         custom_settings
     )
-
-
-
-
-
-
-
-

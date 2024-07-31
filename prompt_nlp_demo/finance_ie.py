@@ -106,11 +106,11 @@ def inference(sentences: list,
 if __name__ == '__main__':
     # device = 'cuda:0'
     device = 'cpu'
-    tokenizer = AutoTokenizer.from_pretrained("/Users/ligang/PycharmProjects/llm/ChatGLM-6B/THUDM/chatglm-6b-int4",
+    tokenizer = AutoTokenizer.from_pretrained("/Users/pandong2011/PycharmProjects/ChatGLM-6B/THUDM/chatglm-6b-int4",
                                               trust_remote_code=True)
     # model = AutoModel.from_pretrained("./ChatGLM-6B/THUDM/chatglm-6b",
     # trust_remote_code=True).half().cuda()
-    model = AutoModel.from_pretrained("/Users/ligang/PycharmProjects/llm/ChatGLM-6B/THUDM/chatglm-6b-int4",
+    model = AutoModel.from_pretrained("/Users/pandong2011/PycharmProjects/ChatGLM-6B/THUDM/chatglm-6b-int4",
                                       trust_remote_code=True).float()
     model.to(device)
 

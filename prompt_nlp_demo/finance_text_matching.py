@@ -43,7 +43,6 @@ def inference(
     推理函数。
 
     Args:
-        model (transformers.AutoModel): Language Model 模型。
         sentence_pairs (List[str]): 待推理的句子对。
         custom_settings (dict): 初始设定，包含人为给定的 few-shot example。
     """
@@ -59,11 +58,11 @@ def inference(
 if __name__ == '__main__':
     # device = 'cuda:0'
     device = 'cpu'
-    tokenizer = AutoTokenizer.from_pretrained("/Users/ligang/PycharmProjects/llm/ChatGLM-6B/THUDM/chatglm-6b-int4",
+    tokenizer = AutoTokenizer.from_pretrained("/Users/pandong2011/PycharmProjects/ChatGLM-6B/THUDM/chatglm-6b-int4",
                                               trust_remote_code=True)
     # model = AutoModel.from_pretrained("./ChatGLM-6B/THUDM/chatglm-6b",
     # trust_remote_code=True).half().cuda()
-    model = AutoModel.from_pretrained("/Users/ligang/PycharmProjects/llm/ChatGLM-6B/THUDM/chatglm-6b-int4",
+    model = AutoModel.from_pretrained("/Users/pandong2011/PycharmProjects/ChatGLM-6B/THUDM/chatglm-6b-int4",
                                       trust_remote_code=True).float()
     model.to(device)
 
